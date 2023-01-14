@@ -3,6 +3,10 @@ var startGame = document.querySelector("#start");
 var startScreen = document.querySelector("#start-screen");
 var questionDiv = document.querySelector("#questions");
 var questionText = document.querySelector("#question-title");
+var buttonA = document.querySelector("#button-a");
+var buttonB = document.querySelector("#button-b");
+var buttonC = document.querySelector("#button-c");
+var buttonD = document.querySelector("#button-d");
 
 
 
@@ -29,7 +33,11 @@ function showQuestion() {
     startScreen.setAttribute("class", "hide");
     questionDiv.setAttribute("class", "show");
     questionText.innerHTML = "This is the question!";
-    //console.log(questionText)
+    buttonA.innerHTML = "First Option";
+    buttonB.innerHTML = "Second Option";
+    buttonC.innerHTML = "Third Option";
+    buttonD.innerHTML = "Fourth Option";
+    console.log(questions[0]); //this accesses the first element of the array in the questions file
     
   }
 
