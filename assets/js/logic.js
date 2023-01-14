@@ -1,12 +1,18 @@
 
 var startGame = document.querySelector("#start");
+var startScreen = document.querySelector("#start-screen");
+var questionDiv = document.querySelector("#questions");
+var questionText = document.querySelector("#question-title");
+
+
+
+
 startGame.addEventListener("click", begin);
 
 function begin(event){
     console.log("game started");
-    playgame();
+    showQuestion();
 }
-
 
 
 function decrementTimer(){
@@ -19,8 +25,22 @@ function playgame() {
 }
 
 
-/*
+function showQuestion() {
+    startScreen.setAttribute("class", "hide");
+    questionDiv.setAttribute("class", "show");
+    questionText.innerHTML = "This is the question!";
+    //console.log(questionText)
+    
+  }
 
+  function getNewQuestion(){
+
+  }
+  //showQuestion();
+
+
+
+/*
 Psuedocode 
 
 Variables
@@ -53,7 +73,7 @@ score = 0;
     --- 
 
     1. game start function: add an event listener to the start button
-
+        Once the start button has been clicked, change the div containing the question to "show" instead of "hide"
         1.1 - game will start with a question and timer will start
         1.2 - get score from localStorage
         1.3 - function should keep track of the questions - if all questions completed function should render to page their score and render html elements to save their initials and their final score. 
