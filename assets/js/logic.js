@@ -8,8 +8,7 @@ var buttonB = document.querySelector("#button-b");
 var buttonC = document.querySelector("#button-c");
 var buttonD = document.querySelector("#button-d");
 
-
-
+var updatedQuestionList = questions; //holds the questions left after removing each one when it is used
 
 startGame.addEventListener("click", begin);
 
@@ -37,14 +36,16 @@ function showQuestion() {
     buttonB.innerHTML = "Second Option";
     buttonC.innerHTML = "Third Option";
     buttonD.innerHTML = "Fourth Option";
-    console.log(questions[0]); //this accesses the first element of the array in the questions file
+    getNewQuestion();
+    //console.log(questions[0]); //this accesses the first element of the array in the questions file
     
   }
 
   function getNewQuestion(){
-
+    chosenQuestion = updatedQuestionList[Math.floor(Math.random()*updatedQuestionList.length)];
+    console.log(chosenQuestion);
   }
-  //showQuestion();
+
 
 
 
