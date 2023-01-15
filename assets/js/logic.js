@@ -85,14 +85,15 @@ function startTimer() {
         if (wrongAnswer) {
           wrongAnswer = false;
           timerCount -= 5;
+        }
           // Tests if time has run out
-            if (timerCount === 0) {
+            if (timerCount <= 0) {
             // Clears interval
             clearInterval(timer);
             prompt("Time is up!");
             }
         }   
-      }
+      
     }, 1000);
 
 }
