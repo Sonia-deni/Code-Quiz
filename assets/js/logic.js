@@ -8,53 +8,68 @@ var buttonB = document.querySelector("#button-b");
 var buttonC = document.querySelector("#button-c");
 var buttonD = document.querySelector("#button-d");
 
+
 var updatedQuestionList = questions; //holds the questions left after removing each one when it is used
-var chosenQuestion = {};
+var currentQuestion = {};
+var score = 0;
 
 startGame.addEventListener("click", begin);
-
 function begin(event){
     console.log("game started");
-    showQuestion();
+    startScreen.setAttribute("class", "hide");
+    questionDiv.setAttribute("class", "show");
+    playgame();
 }
-
 
 function decrementTimer(){
 
 }
 
 function playgame() {
-    
-
+    getNewQuestion();
+     //get a random question from the array
+    var btns = document.querySelectorAll('button');
+    btns.forEach(function(i) {
+        i.addEventListener('click', function() {
+            //console.log(i);
+            var compareAnswer = currentQuestion.CorrectAnswer;
+            if(i.innerHTML === compareAnswer){
+            score++;
+            getNewQuestion();
+            compareAnswer=currentQuestion.CorrectAnswer;
+            console.log(updatedQuestionList);
+            }
+            else{
+                console.log("nope");
+            }
+        })
+    });
 }
-
-
-function showQuestion() {
-    startScreen.setAttribute("class", "hide");
-    questionDiv.setAttribute("class", "show");
-   
-    setQuestion(getNewQuestion());
-    //console.log(questions[0]); //this accesses the first element of the array in the questions file
-    
-  }
 
   function getNewQuestion(){
-    var randomQuestionIndex = Math.floor(Math.random()*updatedQuestionList.length);
-    chosenQuestion = updatedQuestionList[randomQuestionIndex];
-    updatedQuestionList.splice(randomQuestionIndex, 1);
-    return chosenQuestion;
-    console.log(randomQuestionIndex);
-    console.log(chosenQuestion);
-    console.log(updatedQuestionList);
+    if(updatedQuestionList.length>0){
+        var randomQuestionIndex = Math.floor(Math.random()*updatedQuestionList.length);
+        console.log(randomQuestionIndex);
+        currentQuestion = updatedQuestionList[randomQuestionIndex];
+        console.log(currentQuestion);
+        updatedQuestionList.splice(randomQuestionIndex, 1);
+        console.log(updatedQuestionList);
+        questionText.innerHTML = currentQuestion.Question;
+        buttonA.innerHTML = currentQuestion.ChoiceA;
+        buttonB.innerHTML = currentQuestion.ChoiceB;
+        buttonC.innerHTML = currentQuestion.ChoiceC;
+        buttonD.innerHTML = currentQuestion.ChoiceD;
+        return currentQuestion;
+    }
+    else{
+        alert("End of questions!")
+        console.log(score);
+    }
+    
   }
 
-function setQuestion(chosenQuestion){
-    questionText.innerHTML = chosenQuestion.Question;
-    buttonA.innerHTML = chosenQuestion.ChoiceA;
-    buttonB.innerHTML = chosenQuestion.ChoiceB;
-    buttonC.innerHTML = chosenQuestion.ChoiceC;
-    buttonD.innerHTML = chosenQuestion.ChoiceD;
-}
+    
+    /*compare the string from textcontent on button to the string for correct answer in object. If correct, return true and add one point to the score, otherwise return false and call the decrement timer function.*/
 
 
 /*
