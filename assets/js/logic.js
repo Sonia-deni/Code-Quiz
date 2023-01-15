@@ -7,26 +7,31 @@ var buttonA = document.querySelector("#button-a");
 var buttonB = document.querySelector("#button-b");
 var buttonC = document.querySelector("#button-c");
 var buttonD = document.querySelector("#button-d");
+var feedbackDiv = document.querySelector("#feedback");
+var feedbackText = document.querySelector("#feedback-text");
+var timerElement = document.querySelector("#time");
 
 
 var updatedQuestionList = questions; //holds the questions left after removing each one when it is used
 var currentQuestion = {}; //used for checking correct answer and setting the text on screen
 var score = 0;
+var timerCount;
+var wrongAnswer = false;
 
 startGame.addEventListener("click", begin);
 function begin(event){
     console.log("game started");
     startScreen.setAttribute("class", "hide");
     questionDiv.setAttribute("class", "show");
+    feedbackDiv.setAttribute("class", "show");
     playgame();
 }
 
-function decrementTimer(){
-
-}
 
 function playgame() {
     getNewQuestion();
+    timerCount = 60;
+    startTimer();
      //get a random question from the array
     var btns = document.querySelectorAll('button');
     btns.forEach(function(i) {
@@ -35,13 +40,15 @@ function playgame() {
             var compareAnswer = currentQuestion.CorrectAnswer;
             if(i.innerHTML === compareAnswer){
             score++;
+            feedbackText.innerHTML = "Yes!";
             getNewQuestion();
             compareAnswer=currentQuestion.CorrectAnswer;
             //console.log(updatedQuestionList);
             }
             else{
                 console.log("nope");
-                decrementTimer();
+                wrongAnswer = true;
+                feedbackText.innerHTML = "Nope!";
                 getNewQuestion();
                 compareAnswer=currentQuestion.CorrectAnswer;
             }
@@ -52,11 +59,8 @@ function playgame() {
   function getNewQuestion(){
     if(updatedQuestionList.length>0){
         var randomQuestionIndex = Math.floor(Math.random()*updatedQuestionList.length);
-        //console.log(randomQuestionIndex);
         currentQuestion = updatedQuestionList[randomQuestionIndex];
-        //console.log(currentQuestion);
         updatedQuestionList.splice(randomQuestionIndex, 1);
-        //console.log(updatedQuestionList);
         questionText.innerHTML = currentQuestion.Question;
         buttonA.innerHTML = currentQuestion.ChoiceA;
         buttonB.innerHTML = currentQuestion.ChoiceB;
@@ -72,8 +76,29 @@ function playgame() {
   }
 
     
-    /*compare the string from textcontent on button to the string for correct answer in object. If correct, return true and add one point to the score, otherwise return false and call the decrement timer function.*/
+function startTimer() {
+    // Sets timer
+    timer = setInterval(function() {
+      timerCount--;
+      timerElement.textContent = timerCount;
+      if (timerCount >= 0) {
+        if (wrongAnswer) {
+          wrongAnswer = false;
+          timerCount -= 5;
+          // Tests if time has run out
+            if (timerCount === 0) {
+            // Clears interval
+            clearInterval(timer);
+            prompt("Time is up!");
+            }
+        }   
+      }
+    }, 1000);
 
+}
+
+
+  
 
 /*
 Psuedocode 
