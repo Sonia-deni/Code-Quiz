@@ -10,7 +10,7 @@ var buttonD = document.querySelector("#button-d");
 
 
 var updatedQuestionList = questions; //holds the questions left after removing each one when it is used
-var currentQuestion = {};
+var currentQuestion = {}; //used for checking correct answer and setting the text on screen
 var score = 0;
 
 startGame.addEventListener("click", begin);
@@ -37,10 +37,13 @@ function playgame() {
             score++;
             getNewQuestion();
             compareAnswer=currentQuestion.CorrectAnswer;
-            console.log(updatedQuestionList);
+            //console.log(updatedQuestionList);
             }
             else{
                 console.log("nope");
+                decrementTimer();
+                getNewQuestion();
+                compareAnswer=currentQuestion.CorrectAnswer;
             }
         })
     });
@@ -49,11 +52,11 @@ function playgame() {
   function getNewQuestion(){
     if(updatedQuestionList.length>0){
         var randomQuestionIndex = Math.floor(Math.random()*updatedQuestionList.length);
-        console.log(randomQuestionIndex);
+        //console.log(randomQuestionIndex);
         currentQuestion = updatedQuestionList[randomQuestionIndex];
-        console.log(currentQuestion);
+        //console.log(currentQuestion);
         updatedQuestionList.splice(randomQuestionIndex, 1);
-        console.log(updatedQuestionList);
+        //console.log(updatedQuestionList);
         questionText.innerHTML = currentQuestion.Question;
         buttonA.innerHTML = currentQuestion.ChoiceA;
         buttonB.innerHTML = currentQuestion.ChoiceB;
