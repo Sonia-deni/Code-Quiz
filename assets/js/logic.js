@@ -68,10 +68,8 @@ function submitScore(){
     var submitButton = document.querySelector("#submit");
     submitButton.addEventListener("click", function(){
         var initials = document.querySelector("#initials").value;
-        submitDetails.Initials = initials;
-        submitDetails.Score = score;
-        //console.log(submitDetails);
-        localStorage.setItem("finalScore", submitDetails);
+        var scoreAndInitials = score + " " + initials;
+        localStorage.setItem("finalScore", scoreAndInitials);
     });
 }
     

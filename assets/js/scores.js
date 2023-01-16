@@ -1,5 +1,7 @@
 var newScore = localStorage.getItem("finalScore");
 console.log(newScore);
+
+
 var scoresList = document.querySelector("#highscores");
 var highScores = [];
 
