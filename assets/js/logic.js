@@ -10,6 +10,7 @@ var buttonD = document.querySelector("#button-d");
 var feedbackDiv = document.querySelector("#feedback");
 var feedbackText = document.querySelector("#feedback-text");
 var timerElement = document.querySelector("#time");
+var endScreen = document.querySelector("#end-screen");
 
 
 var updatedQuestionList = questions; //holds the questions left after removing each one when it is used
@@ -20,7 +21,6 @@ var wrongAnswer = false;
 
 startGame.addEventListener("click", begin);
 function begin(event){
-    console.log("game started");
     startScreen.setAttribute("class", "hide");
     questionDiv.setAttribute("class", "show");
     feedbackDiv.setAttribute("class", "show");
@@ -29,35 +29,44 @@ function begin(event){
 
 
 function playgame() {
-    getNewQuestion();
-    timerCount = 60;
-    startTimer();
-     //get a random question from the array
-    var btns = document.querySelectorAll('button');
+    getNewQuestion(); //call the function to generate and display a random question
+    timerCount = 60; //set the time for the game to 60 seconds
+    startTimer(); //countdown to 0
+    var btns = document.querySelectorAll('button'); //wait for user to click answer button
     btns.forEach(function(i) {
         i.addEventListener('click', function() {
-            //console.log(i);
-            var compareAnswer = currentQuestion.CorrectAnswer;
-            if(i.innerHTML === compareAnswer){
-            score++;
-            feedbackText.innerHTML = "Yes!";
-            getNewQuestion();
-            compareAnswer=currentQuestion.CorrectAnswer;
-            //console.log(updatedQuestionList);
+            var compareAnswer = currentQuestion.CorrectAnswer; //set correct answer for the question
+            if(i.innerHTML === compareAnswer){ //if it matches with the string from the button click
+            score++; //increment score
+            feedbackText.innerHTML = "Yes!"; //tell player they are correct
+            getNewQuestion(); //generate the next question
+            compareAnswer=currentQuestion.CorrectAnswer; //update the new correct answer to be checked
             }
-            else{
-                console.log("nope");
-                wrongAnswer = true;
-                feedbackText.innerHTML = "Nope!";
-                getNewQuestion();
-                compareAnswer=currentQuestion.CorrectAnswer;
+            else{ //if the answer is incorrect
+                wrongAnswer = true; //set the boolean to true so that the time can be deducted
+                feedbackText.innerHTML = "Nope!"; //tell the player they are incorrect
+                getNewQuestion(); //generate the next question
+                compareAnswer=currentQuestion.CorrectAnswer; //update the new correct answer to be checked
             }
         })
     });
 }
 
-  function getNewQuestion(){
-    if(updatedQuestionList.length>0){
+function endGame(){
+    //hide the questions and show the final screen. Display the final score
+    questionDiv.setAttribute("class", "hide");
+    feedbackDiv.setAttribute("class", "hide");
+    endScreen.setAttribute("class", "show");
+    var finalScore = document.querySelector("#final-score");
+    finalScore.innerHTML=score;
+}
+
+
+
+
+function getNewQuestion(){
+    //if there are questions left in the array, select a random index number and assign the question object to the currentQuestion variable. Then remove that question from the array using splice() and finally set the text to the html to display the updated question
+    if(updatedQuestionList.length>0){ 
         var randomQuestionIndex = Math.floor(Math.random()*updatedQuestionList.length);
         currentQuestion = updatedQuestionList[randomQuestionIndex];
         updatedQuestionList.splice(randomQuestionIndex, 1);
@@ -69,12 +78,12 @@ function playgame() {
         return currentQuestion;
     }
     else{
+        endGame();
         alert("End of questions!")
         console.log(score);
     }
     
-  }
-
+}
     
 function startTimer() {
     // Sets timer
@@ -90,10 +99,10 @@ function startTimer() {
             if (timerCount <= 0) {
             // Clears interval
             clearInterval(timer);
+            endGame();
             prompt("Time is up!");
             }
         }   
-      
     }, 1000);
 
 }
@@ -107,26 +116,6 @@ Psuedocode
 Variables
 ---
 
-score = 0; 
-
-
-1. We need a list of questions to be displayed on the page: these questions should be stored in the questions.js file. 
-
-    1.1 These questions should be stored within an array of objects. 
-    1.2 These objects should contain properties to store the buttons
-        - describe the object 
-
-        [
-
-            {
-                question: 'What data types can an array store ?',
-                choices: ['string', 'numbers', 'objects', 'all of them' ],
-                answer: 'all of them', 
-                correct: false
-            }, 
-
-            // multiple object questions 
-        ]
 
 2. logic file:  
 
