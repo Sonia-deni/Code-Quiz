@@ -18,6 +18,7 @@ var currentQuestion = {}; //used for checking correct answer and setting the tex
 var score = 0;
 var timerCount;
 var wrongAnswer = false;
+var submitDetails = {Score: "", Initials: ""};
 
 startGame.addEventListener("click", begin);
 function begin(event){
@@ -59,10 +60,21 @@ function endGame(){
     endScreen.setAttribute("class", "show");
     var finalScore = document.querySelector("#final-score");
     finalScore.innerHTML=score;
+    localStorage.setItem("finalScore", score);
+    submitScore();
 }
 
-
-
+function submitScore(){
+    var submitButton = document.querySelector("#submit");
+    submitButton.addEventListener("click", function(){
+        var initials = document.querySelector("#initials").value;
+        submitDetails.Initials = initials;
+        submitDetails.Score = score;
+        //console.log(submitDetails);
+        localStorage.setItem("finalScore", submitDetails);
+    });
+}
+    
 
 function getNewQuestion(){
     //if there are questions left in the array, select a random index number and assign the question object to the currentQuestion variable. Then remove that question from the array using splice() and finally set the text to the html to display the updated question
@@ -79,8 +91,6 @@ function getNewQuestion(){
     }
     else{
         endGame();
-        alert("End of questions!")
-        console.log(score);
     }
     
 }
@@ -100,7 +110,6 @@ function startTimer() {
             // Clears interval
             clearInterval(timer);
             endGame();
-            prompt("Time is up!");
             }
         }   
     }, 1000);
