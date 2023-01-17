@@ -8,3 +8,11 @@ for(var i=0; i<highScores.length; i++){
     li.textContent = eachScore;
     list.appendChild(li);  
 }
+
+
+//add event listener to clear button. If clicked, clear local storage and set the list text to empty
+var clearButton = document.querySelector("#clear");
+clearButton.addEventListener("click", function(){
+localStorage.clear();
+list.textContent = "";
+})   

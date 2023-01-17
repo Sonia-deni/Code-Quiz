@@ -60,7 +60,7 @@ function endGame(){
     endScreen.setAttribute("class", "show");
     var finalScore = document.querySelector("#final-score");
     finalScore.innerHTML=score;
-    localStorage.setItem("finalScore", score);
+    //localStorage.setItem("finalScore", score);
     submitScore();
 }
 
@@ -126,3 +126,4 @@ function startTimer() {
     }, 1000);
 
 }
+
