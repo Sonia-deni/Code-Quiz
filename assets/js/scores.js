@@ -1,21 +1,10 @@
-var newScore = localStorage.getItem("finalScore");
-console.log(newScore);
+var highScores = JSON.parse(localStorage.getItem("scoresList")) || [];//get the up to date list from local storage
+var list = document.querySelector("#highscores"); //set text to the unordered list
 
-
-var scoresList = document.querySelector("#highscores");
-var highScores = [];
-
-/*for(var i=0; i< highScores.length; i++){
-    var score = highScores[i];
-
+//for each element in the array of scores, get the score and the initials and create a new list element to add to the end of the list
+for(var i=0; i<highScores.length; i++){
+    var eachScore = highScores[i].score + " -  " + highScores[i].initials;
     var li = document.createElement("li");
-    li.textContent = newScore;
-    
-    scoresList.appendChild(li);
-
-
+    li.textContent = eachScore;
+    list.appendChild(li);  
 }
-var li = document.createElement("li");
-li.textContent = newScore;
-
-scoresList.appendChild(li);*/
