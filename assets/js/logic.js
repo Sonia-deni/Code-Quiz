@@ -37,6 +37,8 @@ function playgame() {
             var compareAnswer = currentQuestion.CorrectAnswer; //set correct answer for the question
             if(i.innerHTML === compareAnswer){ //if it matches with the string from the button click
             score++; //increment score
+            var audio = new Audio('assets/sfx/correct.wav');
+            audio.play();
             feedbackText.innerHTML = "Yes!"; //tell player they are correct
             getNewQuestion(); //generate the next question
             compareAnswer=currentQuestion.CorrectAnswer; //update the new correct answer to be checked
@@ -44,6 +46,8 @@ function playgame() {
             else{ //if the answer is incorrect
                 wrongAnswer = true; //set the boolean to true so that the time can be deducted
                 feedbackText.innerHTML = "Nope!"; //tell the player they are incorrect
+                var audio = new Audio('assets/sfx/incorrect.wav');
+                audio.play();
                 getNewQuestion(); //generate the next question
                 compareAnswer=currentQuestion.CorrectAnswer; //update the new correct answer to be checked
             }
