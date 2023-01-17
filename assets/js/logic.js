@@ -18,7 +18,6 @@ var currentQuestion = {}; //used for checking correct answer and setting the tex
 var score = 0;
 var timerCount;
 var wrongAnswer = false;
-var submitDetails = {Score: "", Initials: ""};
 
 startGame.addEventListener("click", begin);
 function begin(event){
@@ -27,7 +26,6 @@ function begin(event){
     feedbackDiv.setAttribute("class", "show");
     playgame();
 }
-
 
 function playgame() {
     getNewQuestion(); //call the function to generate and display a random question
@@ -60,7 +58,6 @@ function endGame(){
     endScreen.setAttribute("class", "show");
     var finalScore = document.querySelector("#final-score");
     finalScore.innerHTML=score;
-    //localStorage.setItem("finalScore", score);
     submitScore();
 }
 
@@ -69,7 +66,7 @@ function submitScore(){
     submitButton.addEventListener("click", function(event){
     event.preventDefault();
     addScore();
-    submitButton.disabled = "true";
+    submitButton.disabled = "true"; //prevent the score being added multiple times to the array
 });
 }
 
@@ -85,7 +82,6 @@ function addScore(){
     //save the updated list into local storage
     localStorage.setItem("scoresList", JSON.stringify(highScores)); 
 }
-
 
 function getNewQuestion(){
     //if there are questions left in the array, select a random index number and assign the question object to the currentQuestion variable. Then remove that question from the array using splice() and finally set the text to the html to display the updated question
@@ -124,6 +120,5 @@ function startTimer() {
             }
         }   
     }, 1000);
-
 }
 
